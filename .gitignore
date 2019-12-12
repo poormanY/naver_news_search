@@ -3,3 +3,4 @@ module/private
 
 # files
 *.pyc
+*.swp
