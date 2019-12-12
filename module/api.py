@@ -43,6 +43,10 @@ def main():
   r = api.news(p_start="100")
   for item in r['items']:
     print(item['title'])
+    print(item['originallink'])
+    print(item['link'])
+    print(item['description'])
+    print(item['pubDate'])
 
 if __name__ == '__main__':
   main()
