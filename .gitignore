@@ -1,6 +1,9 @@
 # folder
 module/private
 
+# file
+chromedriver
+
 # files
 *.pyc
 *.swp

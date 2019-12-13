@@ -24,14 +24,38 @@ class NaverOpenApi:
     url = "https://openapi.naver.com/v1/search/news"
     if form == "xml":
       url = "https://openapi.naver.com/v1/search/news.xml"
-    parameters = "?query=" + p_query \
-              + "&display=" + p_display \
-              + "&start=" + p_start \
-              + "&sort=" + p_sort
-    r = requests.get(url + parameters, headers=self.header)
-    return json.loads(r.text)
 
-def main():
+    params = {
+        'query':p_query,
+        'display':p_display,
+        'start':p_start,
+        'sort':p_sort
+        }
+    r = requests.get(url, headers=self.header, params=params)
+    if r.status_code == 200:
+      return json.loads(r.text)
+    else:
+      print("Error Code " + str(r.status_code))
+      return None
+
+  def trend(self):
+    url = "https://openapi.naver.com/v1/datalab/search"
+    headers = self.header
+    headers["Content-Type"] = "application/json"
+
+    data = '{"startDate":"2019-01-01","endDate":"2019-12-01","timeUnit":"month","keywordGroups":[{"groupName":"한글","keywords":["한글","korean"]},{"groupName":"영어","keywords":["영어","english"]}],"device":"pc","ages":["1","2"],"gender":"f"}'
+    r = requests.post(url, headers=headers, data=data.encode("utf-8"))
+    if r.status_code == 200:
+      return json.loads(r.text)
+    else:
+      print("Error Code " + str(r.status_code))
+      return None
+
+#########################################################################################
+# main
+#########################################################################################
+
+def main_news():
   api = NaverOpenApi()
 
   r = api.news()
@@ -48,6 +72,13 @@ def main():
     print(item['description'])
     print(item['pubDate'])
 
+def main_trend():
+  api = NaverOpenApi()
+  r = api.trend()
+  print(r)
+
 if __name__ == '__main__':
-  main()
+  #main_news()
+  main_trend()
+
 
