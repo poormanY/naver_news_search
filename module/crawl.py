@@ -17,8 +17,8 @@ class WebCrawl:
 
     url = "https://www.naver.com"
     driver = webdriver.Chrome('./chromedriver')
+    driver.implicitly_wait(1) # seconds
     driver.get(url)
-    time.sleep(1)
     
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
@@ -60,5 +60,5 @@ def main_dynamic():
 
 if __name__ == '__main__':
   main_kwds()
-  #main_dynamic()
+  main_dynamic()
 
