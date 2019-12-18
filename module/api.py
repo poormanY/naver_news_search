@@ -13,7 +13,7 @@ class NaverOpenApi:
       "X-Naver-Client-Secret": self.clientSecret
     }
 
-  def news(self, p_query="주식", p_display="100", p_start="1", p_sort="date", form="json"):
+  def news(self, p_query="주식", p_display="100", p_start="1", p_sort="sim", form="json"):
     ## parameters
     # p_query : string(udf-8)
     # p_display : 10~100
@@ -80,5 +80,3 @@ def main_trend():
 if __name__ == '__main__':
   #main_news()
   main_trend()
-
-
