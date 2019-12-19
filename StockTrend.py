@@ -62,6 +62,19 @@ def main():
 
     blogDescription = blogDescription + "<h2>" + str(rankN) + ". " + p_query + " - " + title + "</h2>" + description + "<br>" + "<a href='" + link + "'>" + link + "</a>" + "<br>"
 
+  # Add Hash-Tags
+  blogDescription = blogDescription + "<br>"
+  for kwd in kwds_rise:
+    if kwd == 'now':
+      continue
+    tag = ''.join(kwds_rise[kwd].split())
+    blogDescription = blogDescription + "#" + tag + " "
+  for kwd in kwds_fall:
+    if kwd == 'now':
+      continue
+    tag = ''.join(kwds_fall[kwd].split())
+    blogDescription = blogDescription + "#" + tag + " "
+
   blog.post(blogTitle, blogDescription, category)
 
 #########################################################################################

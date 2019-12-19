@@ -42,6 +42,14 @@ def main():
     pubDate = data['items'][0]['pubDate']
 
     blogDescription = blogDescription + "<h2>" + str(rankN) + ". " + p_query + " - " + title + "</h2>" + description + "<br>" + "<a href='" + link + "'>" + link + "</a>" + "<br>"
+  # Add Hash-Tags
+  blogDescription = blogDescription + "<br>"
+  for kwd in kwds:
+    if kwd == 'now':
+      continue
+    tag = ''.join(kwds[kwd].split())
+    blogDescription = blogDescription + "#" + tag + " "
+
   blog.post(blogTitle, blogDescription, category)
 
 #########################################################################################
