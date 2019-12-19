@@ -16,7 +16,7 @@ def main():
   p_sort="date"
   form="json"
 
-  # ranking keywords crawling top20
+  # ranking keywords crawling top10
   crawl = WebCrawl()
   kwds_rise = crawl.stock_rise()
   kwds_fall = crawl.stock_fall()

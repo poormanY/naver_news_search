@@ -76,6 +76,60 @@ class WebCrawl:
       output[idx] = kwd.text
     return output
 
+  def headline_news(self, url):
+    # output : { now:time, 1:kwd1, ... }
+    output = {}
+    now = str(datetime.now())
+    output["now"] = now
+
+    # 정치
+    #url = "https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=100"
+    html = requests.get(url).text
+    soup = BeautifulSoup(html, 'html.parser')
+
+    cluster_list = soup.find_all('ul', {'class':'cluster_list'})
+    for idx, items in enumerate(cluster_list,1):
+        item = items.find('div', {'class':'cluster_text'})
+        text_link = item.find('a', href=True)['href']
+        text_headline = item.find('a',{'class':'cluster_text_headline'}).text
+        text_lede = item.find('div',{'class':'cluster_text_lede'}).text
+
+        output[idx] = {}
+        output[idx]['link'] = text_link
+        output[idx]['headline'] = text_headline
+        output[idx]['lede'] = text_lede
+    return output
+
+  def headline_news_politics(self):
+    url = "https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=100"
+    output = self.headline_news(url)
+    return output
+
+  def headline_news_economy(self):
+    url = "https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=101"
+    output = self.headline_news(url)
+    return output
+
+  def headline_news_society(self):
+    url = "https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=102"
+    output = self.headline_news(url)
+    return output
+
+  def headline_news_life(self):
+    url = "https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=103"
+    output = self.headline_news(url)
+    return output
+
+  def headline_news_world(self):
+    url = "https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=104"
+    output = self.headline_news(url)
+    return output
+
+  def headline_news_it(self):
+    url = "https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=105"
+    output = self.headline_news(url)
+    return output
+
 #########################################################################################
 # main
 #########################################################################################
@@ -100,8 +154,16 @@ def main_stock_fall():
   kwds = crawl.stock_fall()
   print(kwds)
 
+def main_headline_news():
+  crawl = WebCrawl()
+  kwds = crawl.headline_news_politics()
+  print(kwds)
+  kwds = crawl.headline_news_it()
+  print(kwds)
+
 if __name__ == '__main__':
   #main_kwds()
   #main_dynamic()
   #main_stock_rise()
-  main_stock_fall()
+  #main_stock_fall()
+  main_headline_news()
