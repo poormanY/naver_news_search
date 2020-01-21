@@ -40,8 +40,10 @@ class WebCrawl:
     html = requests.get(url).text
     soup = BeautifulSoup(html, 'html.parser')
     kwds = soup.select('.PM_CL_realtimeKeyword_rolling span[class*=ah_k]')
+    #kwds = soup.select('span.item_title')
     for idx, kwd in enumerate(kwds, 1):
       output[idx] = kwd.text
+
     return output
 
   def stock_rise(self, num=10):
@@ -163,7 +165,7 @@ def main_headline_news():
 
 if __name__ == '__main__':
   #main_kwds()
-  #main_dynamic()
+  main_dynamic()
   #main_stock_rise()
   #main_stock_fall()
-  main_headline_news()
+  #main_headline_news()
