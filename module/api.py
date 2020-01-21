@@ -1,5 +1,7 @@
 import requests
 import json
+import urllib.request
+
 
 from private.client import PrivateClient
 
@@ -12,6 +14,26 @@ class NaverOpenApi:
       "X-Naver-Client-Id": self.clientId,
       "X-Naver-Client-Secret": self.clientSecret
     }
+
+
+  def papago(self, text, lang1="ko", lang2="en"):
+    client_id = self.clientId # 개발자센터에서 발급받은 Client ID 값
+    client_secret = self.clientSecret # 개발자센터에서 발급받은 Client Secret 값
+    encText = urllib.parse.quote(text)
+    data = "source=" + lang1 + "&target=" + lang2 + "&text=" + encText
+    url = "https://openapi.naver.com/v1/papago/n2mt"
+    request = urllib.request.Request(url)
+    request.add_header("X-Naver-Client-Id",client_id)
+    request.add_header("X-Naver-Client-Secret",client_secret)
+    response = urllib.request.urlopen(request, data=data.encode("utf-8"))
+    rescode = response.getcode()
+    if(rescode==200):
+        response_body = response.read()
+        #print(response_body.decode('utf-8'))
+        return json.loads(response_body)['message']['result']['translatedText']
+    else:
+        print("Error Code:" + rescode)
+        return None
 
   def news(self, p_query="주식", p_display="100", p_start="1", p_sort="sim", form="json"):
     ## parameters
@@ -77,6 +99,15 @@ def main_trend():
   r = api.trend()
   print(r)
 
+def main_papago():
+  api = NaverOpenApi()
+  lang1 = "en"
+  lang2 = "ko"
+  text = "I found a love for me"
+  r = api.papago(text, lang1, lang2)
+  print(r)
+
 if __name__ == '__main__':
   #main_news()
-  main_trend()
+  #main_trend()
+  main_papago()
